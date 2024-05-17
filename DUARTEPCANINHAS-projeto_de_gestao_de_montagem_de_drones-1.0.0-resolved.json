@@ -1,0 +1,500 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Projeto de Gestão de Montagem de Drones",
+    "description": "- Duarte Caninhas, nº45877",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/DUARTEPCANINHAS/projeto_de_gestao_de_montagem_de_drones/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "User authentication operations"
+    },
+    {
+      "name": "Drone Assembly",
+      "description": "Operations related to drone assembly"
+    }
+  ],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Register a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully registered"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Authenticate a user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginCredentials"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
+          }
+        }
+      }
+    },
+    "/inventory/parts": {
+      "get": {
+        "tags": [
+          "Drone Assembly"
+        ],
+        "summary": "Get all parts",
+        "responses": {
+          "200": {
+            "description": "List of all parts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Part"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Drone Assembly"
+        ],
+        "summary": "Add a new part",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Part"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Part successfully added"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/assembly/projects": {
+      "get": {
+        "tags": [
+          "Drone Assembly"
+        ],
+        "summary": "Get all drone assembly projects",
+        "responses": {
+          "200": {
+            "description": "List of all drone assembly projects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Assembly"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Drone Assembly"
+        ],
+        "summary": "Create a new drone assembly project",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Assembly"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Drone assembly project successfully created"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/assembly/projects/{userId}/{projectId}": {
+      "get": {
+        "tags": [
+          "Drone Assembly"
+        ],
+        "summary": "Get a user's specific drone assembly project by ID",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User ID associated with the assembly project",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "ID of the assembly project",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Drone assembly project found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Assembly"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Drone assembly project not found"
+          }
+        }
+      }
+    },
+    "/assembly/project/{projectId}": {
+      "get": {
+        "tags": [
+          "Drone Assembly"
+        ],
+        "summary": "Get a drone assembly project by ID",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "ID of the assembly project",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Drone assembly project found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Assembly"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Drone assembly project not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Drone Assembly"
+        ],
+        "summary": "Update a drone assembly project by ID",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "ID of the assembly project",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssemblyPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Drone assembly project successfully updated"
+          },
+          "404": {
+            "description": "Drone assembly project not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Drone Assembly"
+        ],
+        "summary": "Delete a drone assembly project by ID",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "ID of the assembly project",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Drone assembly project successfully deleted"
+          },
+          "404": {
+            "description": "Drone assembly project not found"
+          }
+        }
+      }
+    },
+    "/statistics/projects": {
+      "get": {
+        "tags": [
+          "Drone Assembly"
+        ],
+        "summary": "Get assembly statistics",
+        "responses": {
+          "200": {
+            "description": "Drone assembly statistics found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Statistics"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Drone assembly statistics not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int",
+            "example": 21
+          },
+          "username": {
+            "type": "string",
+            "example": "DuarteC"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Duarte"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Caninhas"
+          },
+          "email": {
+            "type": "string",
+            "example": "duarte@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "78945"
+          },
+          "phone": {
+            "type": "string",
+            "example": "968457123"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "LoginCredentials": {
+        "required": [
+          "password",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "Part": {
+        "required": [
+          "description",
+          "name",
+          "quantity"
+        ],
+        "type": "object",
+        "properties": {
+          "partId": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer"
+          }
+        }
+      },
+      "Assembly": {
+        "required": [
+          "assemblyDate",
+          "parts",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer"
+          },
+          "parts": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "assemblyDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AssemblyPUT": {
+        "required": [
+          "assemblyDate",
+          "assemblyId",
+          "parts"
+        ],
+        "type": "object",
+        "properties": {
+          "assemblyId": {
+            "type": "integer"
+          },
+          "parts": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "assemblyDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Statistics": {
+        "required": [
+          "assemblyId",
+          "totalAssemblies",
+          "totalParts"
+        ],
+        "type": "object",
+        "properties": {
+          "assemblyId": {
+            "type": "integer"
+          },
+          "totalParts": {
+            "type": "integer"
+          },
+          "totalAssemblies": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}
